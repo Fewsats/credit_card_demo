@@ -22,14 +22,7 @@ def pay_with_cc(l402Offers, FEWSATS_API_KEY):
     # Get the offer ID before modifying the data structure
     offer_id = l402Offers["offers"][1]["id"]
     
-    # Create a copy and rename 'id' to 'offer_id' for SDK compatibility
-    modified_offers = dict(l402Offers)
-    for offer in modified_offers["offers"]:
-        if "id" in offer:
-            offer["offer_id"] = offer["id"]
-            del offer["id"]
-    
-    resp = fs.pay_offer(offer_id, modified_offers)
+    resp = fs.pay_offer(offer_id, dict(l402Offers))
     resp.raise_for_status()
     return resp.json()
     
